@@ -22,12 +22,49 @@
 
 # Sample Output 2 : 1 2 2 3 5
 
-def merge_array(a: list, b: list) -> list:
-    pass
+def merge_array(a: list, b: list, ip: list) -> None:
+    x: int = 0
+    y: int = 0
+    z: int = 0
+    while x < len(a) and y < len(b):
+        if a[x] < b[y]:
+            ip[z] = a[x]
+            x = x + 1
+            z = z + 1
+        else:
+            ip[z] = b[y]
+            y = y + 1
+            z = z + 1
+
+    while x < len(a):
+        ip[z] = a[x]
+        x = x + 1
+        z = z + 1
+
+    while y < len(b):
+        ip[z] = b[y]
+        y = y + 1
+        z = z + 1
 
 
-def first_approach(ip_array: list) -> list:
-    pass
+def first_approach(ip_array: list) -> None:
+    # Base case
+    if len(ip_array) == 0 or len(ip_array) == 1:
+        return
+
+    # Calculate mid
+    mid: int = len(ip_array) // 2
+    if len(ip_array) % 2 == 1:
+        mid = mid + 1
+
+    small_array_1: list = ip_array[0:mid]
+    small_array_2: list = ip_array[mid:]
+
+    # Induction Hypothesis (Assumption)
+    first_approach(small_array_1)
+    first_approach(small_array_2)
+
+    merge_array(small_array_1, small_array_2, ip_array)
 
 
 if __name__ == "__main__":
@@ -38,4 +75,5 @@ if __name__ == "__main__":
         input_array.append(ele)
 
     print("Input Array :", input_array)
-    print(first_approach(input_array))
+    first_approach(input_array)
+    print("Sorted Array :", input_array)
